@@ -3,24 +3,30 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database")
 
-//view engine para exibir html
+const categoriesController = require("./categories/CategoriesController");
+const articlesController = require("./articles/ArticlesController");
+
+// view engine para exibir html
 app.set('view engine', 'ejs')
 
 // static
 app.use(express.static('public'))
 
-//body parser
+// body parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//database
+// database
 connection
     .authenticate()
     .then(() => {
-        console.log("conexão feita com sucesso")
+        console.log("conexão feita com sucesso");
     }).catch((error) => {
         console.log(error);
     })
+
+app.use("/", categoriesController);
+app.use("/", articlesController);
 
 app.get("/", (req, res) =>{
     res.render("index")
@@ -29,3 +35,5 @@ app.get("/", (req, res) =>{
 app.listen(8080, () => {
     console.log("o servidor está rodando")
 })
+
+
