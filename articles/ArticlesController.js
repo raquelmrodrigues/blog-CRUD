@@ -12,7 +12,7 @@ router.get("/admin/articles", (req, res) => {
     });
 });
 
-router.get("/admin/srticles/new", (req, res) => {
+router.get("admin/srticles/new", (req, res) => {
     Category.findAll().then(categories => {
         res.render("admin/articles/new", {categories: categories})
     })
