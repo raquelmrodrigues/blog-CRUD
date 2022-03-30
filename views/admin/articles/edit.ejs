@@ -8,12 +8,18 @@
             <h2>Editar artigo</h2>
         </div>
         <div class="card-body">
-            <form method="post" action="/categories/save">
+            <form method="post" action="/articles/update">
+                <input type="hidden" value="<%= article.id %>" name="id">
                 <input class="form-control" type="text" name="title">
                 <textarea class="form-control" name="body"><%- article.body %></textarea><br>
                 <label>Categoria</label>
                 <select class="form-control" name="category">
                     <% categories.forEach((category) => { %>
+                        <% if(category.id == article.categoryID) { %>
+                            <option value="<% category.id %>" selected><%= category.title %></option>
+                        <% } else { %>
+                            <option value="<% category.id %>"><%= category.title %></option>
+                        <% } %>
                         <option value="<%= category.id %>"><%= category.title %></option>
                     <% }) %>
                 </select>
