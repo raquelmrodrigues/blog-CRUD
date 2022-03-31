@@ -1,7 +1,8 @@
 const express =require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const connection = require("./database/database")
+const connection = require("./database/database");
+const session = require("express-session");
 
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
@@ -13,6 +14,12 @@ const User = require("./users/User");
 
 // view engine para exibir html
 app.set('view engine', 'ejs')
+
+//sessões
+app.use(session({
+    secret: "aiushdiuqjsadhquwdh", 
+    cookie: {maxAge: 300000000}
+}))
 
 // static
 app.use(express.static('public'))
@@ -33,7 +40,6 @@ connection
 app.use("/", categoriesController);
 app.use("/", articlesController);
 app.use("/", usersController);
-
 
 // lista os artigos na home
 app.get("/", (req, res) =>{
